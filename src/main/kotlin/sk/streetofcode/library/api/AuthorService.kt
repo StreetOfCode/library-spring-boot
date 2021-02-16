@@ -8,4 +8,5 @@ interface AuthorService {
     fun getAll(): List<Author>
     fun add(request: AuthorAddRequest): Long?
     fun delete(id: Long)
+    // TODO edit
 }
