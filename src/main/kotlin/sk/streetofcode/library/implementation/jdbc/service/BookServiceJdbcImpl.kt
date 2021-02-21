@@ -11,6 +11,7 @@ import sk.streetofcode.library.implementation.jdbc.db.repository.BookJdbcReposit
 import sk.streetofcode.library.implementation.jdbc.db.repository.CategoryJdbcRepository
 
 @Service
+@Profile("jdbc")
 class BookServiceJdbcImpl(
     private val authorRepository: AuthorJdbcRepository,
     private val bookRepository: BookJdbcRepository,
