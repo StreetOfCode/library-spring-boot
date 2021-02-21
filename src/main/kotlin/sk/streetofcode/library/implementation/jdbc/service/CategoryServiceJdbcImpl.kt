@@ -1,5 +1,6 @@
 package sk.streetofcode.library.implementation.jdbc.service
 
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import sk.streetofcode.library.api.CategoryService
 import sk.streetofcode.library.api.exception.ResourceNotFoundException
@@ -10,6 +11,7 @@ import sk.streetofcode.library.implementation.jdbc.db.repository.BookJdbcReposit
 import sk.streetofcode.library.implementation.jdbc.db.repository.CategoryJdbcRepository
 
 @Service
+@Profile("jdbc")
 class CategoryServiceJdbcImpl(
     private val categoryRepository: CategoryJdbcRepository,
     private val bookRepository: BookJdbcRepository
