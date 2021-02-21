@@ -1,5 +1,6 @@
 package sk.streetofcode.library.implementation.jpa.service
 
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import sk.streetofcode.library.api.AuthorService
 import sk.streetofcode.library.api.exception.ResourceNotFoundException
@@ -9,6 +10,7 @@ import sk.streetofcode.library.implementation.jpa.db.repository.AuthorJpaReposit
 import sk.streetofcode.library.implementation.jpa.entity.AuthorEntity
 
 @Service
+@Profile("jpa")
 class AuthorServiceJpaImpl(
     private val authorRepository: AuthorJpaRepository
 ) : AuthorService {
