@@ -114,5 +114,30 @@ class CategoryIntegrationTests : IntegrationTest() {
         Assertions.assertEquals("changedDescription", changedCategory.body!!.description)
     }
 
-    // TODO test for delete category will change book
+    @Test
+    fun deleteCategoryWillChangeBook_OK() {
+        // delete category with id 1 (Fantasy) will change book with id 1 (Harry Potter) to category NULL
+
+        // check that category and book exists and that book has categoryId 1 set
+        Assertions.assertEquals(HttpStatus.OK, restTemplate.getForEntity<Category>("/category/1").statusCode)
+        val bookResponse = restTemplate.getForEntity<Book>("/book/1")
+        Assertions.assertEquals(HttpStatus.OK, bookResponse.statusCode)
+        Assertions.assertEquals(1, bookResponse.body!!.categoryId)
+
+        // delete category
+        Assertions.assertEquals(
+            HttpStatus.OK,
+            restTemplate.exchange("/category/1", HttpMethod.DELETE, null, Void::class.java).statusCode
+        )
+
+        // check that category doesn't exist
+        Assertions.assertEquals(
+            HttpStatus.NOT_FOUND,
+            restTemplate.getForEntity<ResourceNotFoundException>("/category/1").statusCode
+        )
+        // check that book has null categoryId
+        val bookWithoutCategoryResponse = restTemplate.getForEntity<Book>("/book/1")
+        Assertions.assertEquals(HttpStatus.OK, bookWithoutCategoryResponse.statusCode)
+        Assertions.assertNull(bookWithoutCategoryResponse.body!!.categoryId)
+    }
 }

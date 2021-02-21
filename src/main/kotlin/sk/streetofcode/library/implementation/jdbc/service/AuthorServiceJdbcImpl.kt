@@ -6,10 +6,12 @@ import sk.streetofcode.library.api.exception.ResourceNotFoundException
 import sk.streetofcode.library.api.request.AuthorAddRequest
 import sk.streetofcode.library.domain.Author
 import sk.streetofcode.library.implementation.jdbc.db.repository.AuthorJdbcRepository
+import sk.streetofcode.library.implementation.jdbc.db.repository.BookJdbcRepository
 
 @Service
 class AuthorServiceJdbcImpl(
-    private val authorRepository: AuthorJdbcRepository
+    private val authorRepository: AuthorJdbcRepository,
+    private val bookRepository: BookJdbcRepository
 ) : AuthorService {
 
     override fun get(id: Long): Author? {
@@ -26,7 +28,7 @@ class AuthorServiceJdbcImpl(
 
     override fun delete(id: Long) {
         if (get(id) != null) {
-            // TODO: Remove all books by this author
+            bookRepository.deleteByAuthor(id)
             authorRepository.delete(id)
         } else {
             throw ResourceNotFoundException("Author with id $id was not found")

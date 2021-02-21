@@ -84,5 +84,28 @@ class AuthorIntegrationTests : IntegrationTest() {
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
-    // TODO test which will delete book when author will be deleted
+    @Test
+    fun deleteAuthorWillDeleteBook_OK() {
+        // delete author with id 1 (J.K. Rowling) will delete book with id 1 (Harry Potter)
+
+        // check that author and book exists
+        Assertions.assertEquals(HttpStatus.OK, restTemplate.getForEntity<Author>("/author/1").statusCode)
+        Assertions.assertEquals(HttpStatus.OK, restTemplate.getForEntity<Book>("/book/1").statusCode)
+
+        // delete author
+        Assertions.assertEquals(
+            HttpStatus.OK,
+            restTemplate.exchange("/author/1", HttpMethod.DELETE, null, Void::class.java).statusCode
+        )
+
+        // check that author and book don't exist
+        Assertions.assertEquals(
+            HttpStatus.NOT_FOUND,
+            restTemplate.getForEntity<ResourceNotFoundException>("/author/1").statusCode
+        )
+        Assertions.assertEquals(
+            HttpStatus.NOT_FOUND,
+            restTemplate.getForEntity<ResourceNotFoundException>("/book/1").statusCode
+        )
+    }
 }

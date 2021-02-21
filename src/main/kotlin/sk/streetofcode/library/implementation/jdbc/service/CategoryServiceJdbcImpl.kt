@@ -6,11 +6,13 @@ import sk.streetofcode.library.api.exception.ResourceNotFoundException
 import sk.streetofcode.library.api.request.CategoryAddRequest
 import sk.streetofcode.library.api.request.CategoryEditRequest
 import sk.streetofcode.library.domain.Category
+import sk.streetofcode.library.implementation.jdbc.db.repository.BookJdbcRepository
 import sk.streetofcode.library.implementation.jdbc.db.repository.CategoryJdbcRepository
 
 @Service
 class CategoryServiceJdbcImpl(
-    private val categoryRepository: CategoryJdbcRepository
+    private val categoryRepository: CategoryJdbcRepository,
+    private val bookRepository: BookJdbcRepository
 ) : CategoryService {
 
     override fun get(id: Long): Category? {
@@ -27,7 +29,7 @@ class CategoryServiceJdbcImpl(
 
     override fun delete(id: Long) {
         if (get(id) != null) {
-            // TODO: Set category in all books with this category id to null
+            bookRepository.setCategoryToNullBy(id)
             categoryRepository.delete(id)
         } else {
             throw ResourceNotFoundException("Category with id $id was not found")
