@@ -7,12 +7,14 @@ import sk.streetofcode.library.api.exception.ResourceNotFoundException
 import sk.streetofcode.library.api.request.AuthorAddRequest
 import sk.streetofcode.library.domain.Author
 import sk.streetofcode.library.implementation.jpa.db.repository.AuthorJpaRepository
+import sk.streetofcode.library.implementation.jpa.db.repository.BookJpaRepository
 import sk.streetofcode.library.implementation.jpa.entity.AuthorEntity
 
 @Service
 @Profile("jpa")
 class AuthorServiceJpaImpl(
-    private val authorRepository: AuthorJpaRepository
+    private val authorRepository: AuthorJpaRepository,
+    private val bookRepository: BookJpaRepository
 ) : AuthorService {
 
     override fun get(id: Long): Author? {
@@ -39,7 +41,7 @@ class AuthorServiceJpaImpl(
 
     override fun delete(id: Long) {
         if (get(id) != null) {
-            // TODO: Remove all books by this author
+            bookRepository.deleteByAuthorId(id)
             authorRepository.deleteById(id)
         } else {
             throw ResourceNotFoundException("Author with id $id was not found")

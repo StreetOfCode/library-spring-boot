@@ -7,13 +7,15 @@ import sk.streetofcode.library.api.exception.ResourceNotFoundException
 import sk.streetofcode.library.api.request.CategoryAddRequest
 import sk.streetofcode.library.api.request.CategoryEditRequest
 import sk.streetofcode.library.domain.Category
+import sk.streetofcode.library.implementation.jpa.db.repository.BookJpaRepository
 import sk.streetofcode.library.implementation.jpa.db.repository.CategoryJpaRepository
 import sk.streetofcode.library.implementation.jpa.entity.CategoryEntity
 
 @Service
 @Profile("jpa")
 class CategoryServiceJpaImpl(
-    private val categoryRepository: CategoryJpaRepository
+    private val categoryRepository: CategoryJpaRepository,
+    private val bookRepository: BookJpaRepository
 ) : CategoryService {
 
     override fun get(id: Long): Category? {
@@ -40,7 +42,7 @@ class CategoryServiceJpaImpl(
 
     override fun delete(id: Long) {
         if (get(id) != null) {
-            // TODO: Set category in all books with this category id to null
+            bookRepository.setBooksCategoryToNullByCategoryId(id)
             categoryRepository.deleteById(id)
         } else {
             throw ResourceNotFoundException("Category with id $id was not found")
