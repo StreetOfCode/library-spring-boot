@@ -25,7 +25,7 @@ class BookJdbcRepository(private val bookRowMapper: BookRowMapper, private val j
         private const val SELECT_BY_NAME_LIKE = "select * from book where book.name ilike ?"
         private const val SELECT_ALL = "select * from book"
         private const val INSERT =
-            "insert into book(author_id, category_id, name, description, created_at) values (?, ?, ?, ?, ?)"
+            "insert into book(id, author_id, category_id, name, description, created_at) values (next value for book_id_seq, ?, ?, ?, ?, ?)"
         private const val DELETE = "delete from book where book.id = ?"
         private const val DELETE_BY_AUTHOR_ID = "delete from book where book.author_id = ?"
         private const val SET_CATEGORY_NULL = "update book set book.category_id = NULL where book.category_id = ?"

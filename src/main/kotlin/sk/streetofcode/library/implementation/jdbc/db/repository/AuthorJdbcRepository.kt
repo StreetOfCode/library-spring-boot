@@ -19,7 +19,7 @@ class AuthorJdbcRepository(private val authorRowMapper: AuthorRowMapper, private
     companion object {
         private const val SELECT_BY_ID = "select * from author where author.id = ?"
         private const val SELECT_ALL = "select * from author"
-        private const val INSERT = "insert into author(name, surname) values (?, ?)"
+        private const val INSERT = "insert into author(id, name, surname) values (next value for author_id_seq, ?, ?)"
         private const val DELETE = "delete from author where author.id = ?"
     }
 

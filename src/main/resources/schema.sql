@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `author`;
 CREATE TABLE `author` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `surname` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
@@ -8,7 +8,7 @@ CREATE TABLE `author` (
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
@@ -16,9 +16,9 @@ CREATE TABLE `category` (
 
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `author_id` bigint(20) NOT NULL,
-  `category_id` bigint(20),
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `author_id` bigint NOT NULL,
+  `category_id` bigint,
   `name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
   `created_at` datetime NOT NULL,

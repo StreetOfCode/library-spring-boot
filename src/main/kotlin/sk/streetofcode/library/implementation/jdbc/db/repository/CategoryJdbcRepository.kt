@@ -19,7 +19,7 @@ class CategoryJdbcRepository(private val categoryRowMapper: CategoryRowMapper, p
     companion object {
         private const val SELECT_BY_ID = "select * from category where category.id = ?"
         private const val SELECT_ALL = "select * from category"
-        private const val INSERT = "insert into category(name, description) values (?, ?)"
+        private const val INSERT = "insert into category(id, name, description) values (next value for category_id_seq, ?, ?)"
         private const val DELETE = "delete from category where category.id = ?"
         private const val EDIT = "update category set name = ?, description = ? where category.id = ?"
 
