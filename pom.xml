@@ -14,7 +14,7 @@
 	<name>library</name>
 	<description>Spring Boot course project</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<kotlin.version>1.7.10</kotlin.version>
 	</properties>
 	<dependencies>
